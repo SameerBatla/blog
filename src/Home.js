@@ -1,34 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import BlogList from './BlogList';
-
+import useFetch from './useFetch';
 const Home = () => {
-  const [blogs, setBlogs] = useState(null);
-  const [loading, setloading] = useState(true);
-  const [error, seterror] = useState(null);
-
-  const getData = async () => {
-    try {
-      const res = await fetch('http://localhost:8000/blogs');
-      if (!res.ok) {
-        throw new Error('something went Wrong');
-      }
-      const data = await res.json();
-      setBlogs(data);
-      setloading(false);
-      seterror(null);
-    } catch (err) {
-      if (err.name === 'AbortError') console.log('fetchaborted');
-      else {
-        setloading(false);
-        seterror(err.message);
-      }
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+  const { data: blogs, loading, error } = useFetch(
+    'http://localhost:8000/blogs'
+  );
   return (
     <React.Fragment>
       {loading && <div>Loading......</div>}
