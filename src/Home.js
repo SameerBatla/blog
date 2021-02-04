@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BlogList from './BlogList';
 
 const Home = () => {
   const [blogs, setBlogs] = useState([
@@ -12,15 +13,13 @@ const Home = () => {
     },
   ]);
   return (
-    <div className="home">
-      {blogs.length > 0 &&
-        blogs.map((blog) => (
-          <div className="blog-preview" key={blog.id}>
-            <h2>{blog.title}</h2>
-            <p>Written By {blog.author}</p>
-          </div>
-        ))}
-    </div>
+    <React.Fragment>
+      {blogs.length > 0 && (
+        <div className="home">
+          <BlogList blogs={blogs} title="All Blogs" />
+        </div>
+      )}
+    </React.Fragment>
   );
 };
 
